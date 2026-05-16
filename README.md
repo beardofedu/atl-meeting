@@ -1,6 +1,6 @@
 # ATL Meeting — GitHub Copilot Demo Repository
 
-> **Demo repository for the Microsoft–UPS Atlanta meeting.**  
+> **GitHub Copilot demo repository for enterprise ADO → GitHub migration.**  
 > All demos use **LogiTrack** — a fictional logistics management portal — as the shared demo story.
 
 This repository contains presenter guides, talking points, and live demo scripts for each section of the day, organized by the meeting agenda. Matt's sections are marked ⭐.
@@ -11,7 +11,7 @@ This repository contains presenter guides, talking points, and live demo scripts
 
 | Time | Section | Owner | Demo? |
 |------|---------|-------|-------|
-| 10:00 | Voice of the Customer Kick-off | David / UPS | — |
+| 10:00 | Voice of the Customer Kick-off | Customer + Microsoft | — |
 | 10:30 | **GitHub Migration Strategy** | ⭐ Matt | ✅ [`section-01`](./section-01-github-migration/) |
 | 11:45 | **Unified SDLC + Dev Productivity with Copilot** | ⭐ Matt + Chikamso | ✅ [`section-02`](./section-02-unified-sdlc/) |
 | 12:30 | Lunch | — | — |

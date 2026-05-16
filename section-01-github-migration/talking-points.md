@@ -5,7 +5,7 @@
 
 ## Opening Frame
 
-> "Before we talk about tooling, let's talk about where most enterprises actually are — and where UPS likely is — with ADO today."
+> "Before we talk about tooling, let's talk about where most enterprises actually are with ADO today."
 
 Most large organizations that adopted ADO in the 2015–2020 window ended up with **fragmented project topology**: dozens (sometimes hundreds) of team projects, inconsistent branch policies, naming conventions that only made sense three reorg cycles ago, and no single pane of glass for engineering leadership.
 

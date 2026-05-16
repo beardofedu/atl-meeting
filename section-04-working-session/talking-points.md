@@ -1,11 +1,11 @@
 # Section 04 — Interactive Working Session
-**Facilitated by:** Matt + Chikamso (+ UPS team) | **Time slot:** 1:00–2:30 PM | **Duration:** 90 min
+**Facilitated by:** Matt + Chikamso (+ Customer team) | **Time slot:** 1:00–2:30 PM | **Duration:** 90 min
 
 ---
 
 ## Purpose
 
-Move from presentation to participation. This session gets the UPS engineering and platform teams talking — surfacing their specific context, constraints, and priorities — so the afternoon DevSecOps section and any follow-up work is calibrated to what actually matters to them.
+Move from presentation to participation. This session gets the customer's engineering and platform teams talking — surfacing their specific context, constraints, and priorities — so the afternoon DevSecOps section and any follow-up work is calibrated to what actually matters to them.
 
 ---
 
