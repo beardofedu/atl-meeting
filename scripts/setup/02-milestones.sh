@@ -31,7 +31,7 @@ create_milestone() {
     --jq '.number' 2>/dev/null && echo " → $title"
 }
 
-echo "Creating sprint milestones for $REPO…"
+echo "Creating sprint milestones for ${REPO}..."
 create_milestone "Sprint 1" "$DUE1" "Core tracking and routing foundations"
 create_milestone "Sprint 2" "$DUE2" "Authentication, accounts, and carrier onboarding"
 create_milestone "Sprint 3" "$DUE3" "Promotions, order management, and search"

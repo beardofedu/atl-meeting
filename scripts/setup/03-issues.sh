@@ -15,12 +15,6 @@ get_milestone() {
 }
 
 echo "Resolving milestone IDs…"
-MS1=$(get_milestone "Sprint 1")
-MS2=$(get_milestone "Sprint 2")
-MS3=$(get_milestone "Sprint 3")
-MS4=$(get_milestone "Sprint 4")
-MS5=$(get_milestone "Sprint 5")
-echo "Sprint 1=$MS1, Sprint 2=$MS2, Sprint 3=$MS3, Sprint 4=$MS4, Sprint 5=$MS5"
 
 create_issue() {
   local title="$1" body="$2" labels="$3" milestone="$4"
@@ -29,7 +23,7 @@ create_issue() {
     --title "$title" \
     --body "$body" \
     --label "$labels" \
-    --milestone "$milestone" \
+    --milestone "Sprint $milestone" \
     2>/dev/null | tail -1
 }
 
@@ -53,7 +47,7 @@ _None — foundational issue_
 ## Blocks
 - #2 TRACK-002
 - #3 TRACK-003" \
-  "tracking,enhancement,sprint-1" "$MS1"
+  "tracking,enhancement,sprint-1" "1"
 
 create_issue \
   "TRACK-002: Shipment Status Event Stream" \
@@ -70,7 +64,7 @@ Build the status event stream layer on top of TRACK-001's API integration so rea
 
 ## Blocks
 - #3 TRACK-003" \
-  "tracking,enhancement,sprint-1" "$MS1"
+  "tracking,enhancement,sprint-1" "1"
 
 create_issue \
   "TRACK-003: Carrier API Backend Integration" \
@@ -90,7 +84,7 @@ Integrate the carrier partner API backend to enable LogiTrack to communicate wit
 - #9 CARR-005 (Carrier Onboarding Portal)
 - #11 DISP-007 (Dispatch Optimization Engine)
 - #14 ORD-001 (Order Service Integration)" \
-  "carrier,enhancement,sprint-1" "$MS1"
+  "carrier,enhancement,sprint-1" "1"
 
 create_issue \
   "ROUTE-001: Route Optimization Summary Panel" \
@@ -108,7 +102,7 @@ _None — uses static route data until TRACK-003 is complete_
 
 ## Blocks
 - #16 ROUTE-002 (Dynamic Route Reoptimization)" \
-  "routing,enhancement,sprint-1" "$MS1"
+  "routing,enhancement,sprint-1" "1"
 
 echo ""
 echo "Creating Sprint 2 issues…"
@@ -132,7 +126,7 @@ _None_
 - #8 AUTH-004
 - #9 CARR-005
 - #10 ACC-006" \
-  "platform,enhancement,sprint-2" "$MS2"
+  "platform,enhancement,sprint-2" "2"
 
 create_issue \
   "AUTH-002: Role-Based Access Control (RBAC)" \
@@ -149,7 +143,7 @@ Implement RBAC so dispatcher, carrier manager, and admin roles have appropriate 
 
 ## Blocks
 _None_" \
-  "platform,enhancement,sprint-2" "$MS2"
+  "platform,enhancement,sprint-2" "2"
 
 create_issue \
   "AUTH-003: Audit Log — User Action Tracking" \
@@ -166,7 +160,7 @@ Log all significant user actions (login, load tender, route changes) to an audit
 
 ## Blocks
 _None_" \
-  "platform,enhancement,sprint-2" "$MS2"
+  "platform,enhancement,sprint-2" "2"
 
 create_issue \
   "AUTH-004: Multi-Factor Authentication (MFA)" \
@@ -183,7 +177,7 @@ Add MFA support as an optional but org-enforceable security layer on top of SSO.
 
 ## Blocks
 _None_" \
-  "platform,enhancement,sprint-2" "$MS2"
+  "platform,enhancement,sprint-2" "2"
 
 create_issue \
   "CARR-005: Carrier Onboarding Portal" \
@@ -201,7 +195,7 @@ Build a self-service carrier onboarding portal where new carriers can register, 
 
 ## Blocks
 _None_" \
-  "carrier,enhancement,sprint-2" "$MS2"
+  "carrier,enhancement,sprint-2" "2"
 
 create_issue \
   "ACC-006: Customer Account Management" \
@@ -218,7 +212,7 @@ Build account management screens so customers can view their shipping history, u
 
 ## Blocks
 _None_" \
-  "accounts,enhancement,sprint-2" "$MS2"
+  "accounts,enhancement,sprint-2" "2"
 
 echo ""
 echo "Creating Sprint 3 issues…"
@@ -240,7 +234,7 @@ Build the dispatch optimization engine that automatically assigns loads to avail
 ## Blocks
 - #12 DISP-008
 - #13 DISP-009" \
-  "dispatch,enhancement,sprint-3" "$MS3"
+  "dispatch,enhancement,sprint-3" "3"
 
 create_issue \
   "DISP-008: Load Tender Automation" \
@@ -257,7 +251,7 @@ Automate load tender submission so approved loads are automatically tendered to 
 
 ## Blocks
 _None_" \
-  "dispatch,enhancement,sprint-3" "$MS3"
+  "dispatch,enhancement,sprint-3" "3"
 
 create_issue \
   "DISP-009: Carrier Capacity Planning Dashboard" \
@@ -275,7 +269,7 @@ Add a capacity planning view showing forecasted load volume vs. carrier capacity
 
 ## Blocks
 _None_" \
-  "dispatch,enhancement,sprint-3" "$MS3"
+  "dispatch,enhancement,sprint-3" "3"
 
 create_issue \
   "ORD-001: Order Service Integration" \
@@ -296,7 +290,7 @@ Integrate LogiTrack with the order management service so shipments are automatic
 - #17 ACC-012
 - #19 NOTIF-001
 - #20 REV-001" \
-  "orders,enhancement,sprint-3" "$MS3"
+  "orders,enhancement,sprint-3" "3"
 
 create_issue \
   "ORD-002: Order Confirmation Notifications" \
@@ -313,7 +307,7 @@ Send automated order confirmation messages (email + in-app) when a shipment is c
 
 ## Blocks
 _None_" \
-  "notifications,orders,enhancement,sprint-3" "$MS3"
+  "notifications,orders,enhancement,sprint-3" "3"
 
 create_issue \
   "SEARCH-001: Full-Text Shipment Search" \
@@ -331,7 +325,7 @@ Upgrade the shipment search bar to support full-text search across tracking ID, 
 
 ## Blocks
 - #23 PERF-001" \
-  "tracking,enhancement,sprint-3" "$MS3"
+  "tracking,enhancement,sprint-3" "3"
 
 echo ""
 echo "Creating Sprint 4 issues…"
@@ -352,7 +346,7 @@ Build a complete order history view in the customer account section, showing all
 
 ## Blocks
 - #18 OPS-009" \
-  "accounts,orders,enhancement,sprint-4" "$MS4"
+  "accounts,orders,enhancement,sprint-4" "4"
 
 create_issue \
   "OPS-009: Return Shipment Processing" \
@@ -370,7 +364,7 @@ Build the return shipment workflow so customers can initiate return pickups and 
 
 ## Blocks
 _None_" \
-  "orders,enhancement,sprint-4" "$MS4"
+  "orders,enhancement,sprint-4" "4"
 
 create_issue \
   "NOTIF-001: Delivery Status Push Notifications" \
@@ -387,7 +381,7 @@ Implement real-time push notifications for delivery status changes: out for deli
 
 ## Blocks
 _None_" \
-  "notifications,enhancement,sprint-4" "$MS4"
+  "notifications,enhancement,sprint-4" "4"
 
 create_issue \
   "REV-001: Carrier Performance Reviews" \
@@ -405,7 +399,7 @@ Allow dispatchers to submit post-delivery carrier performance reviews (rating, c
 
 ## Blocks
 _None_" \
-  "carrier,enhancement,sprint-4" "$MS4"
+  "carrier,enhancement,sprint-4" "4"
 
 echo ""
 echo "Creating Sprint 5 issues…"
@@ -425,7 +419,7 @@ _None_
 
 ## Blocks
 _None_" \
-  "support,enhancement,sprint-5" "$MS5"
+  "support,enhancement,sprint-5" "5"
 
 create_issue \
   "SUP-002: Automated Exception Escalation" \
@@ -443,7 +437,7 @@ Auto-escalate shipment exceptions (missed delivery, carrier no-show, lost shipme
 
 ## Blocks
 _None_" \
-  "support,notifications,enhancement,sprint-5" "$MS5"
+  "support,notifications,enhancement,sprint-5" "5"
 
 create_issue \
   "PERF-001: Dashboard Load Performance Optimization" \
@@ -461,7 +455,7 @@ Profile and optimize dashboard load time, targeting < 2s first contentful paint 
 
 ## Blocks
 _None_" \
-  "platform,enhancement,sprint-5" "$MS5"
+  "platform,enhancement,sprint-5" "5"
 
 create_issue \
   "A11Y-001: Accessibility Audit and Remediation" \
@@ -479,7 +473,7 @@ _None_
 
 ## Blocks
 _None_" \
-  "platform,enhancement,sprint-5" "$MS5"
+  "platform,enhancement,sprint-5" "5"
 
 echo ""
 echo "✅ All 24 issues created for $REPO"
