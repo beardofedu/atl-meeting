@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LogiTrack — Logistics Management Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-icon">📦</span>
+      <span class="logo-text">LogiTrack</span>
+    </div>
+    <nav class="site-nav">
+      <a href="#dashboard" class="nav-link active">Dashboard</a>
+      <a href="#shipments" class="nav-link">Shipments</a>
+      <a href="#routes" class="nav-link">Routes</a>
+      <a href="#carriers" class="nav-link">Carriers</a>
+      <a href="#reports" class="nav-link">Reports</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-secondary">Help</button>
+      <button class="btn btn-primary">New Shipment</button>
+    </div>
+  </header>
+
+  <div id="search-banner" class="search-banner" style="display:none;"></div>
+
+  <main class="main-content">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Quick Stats</h3>
+        <div class="stat-card">
+          <span class="stat-label">Active Shipments</span>
+          <span class="stat-value" id="active-shipments">1,284</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">On-Time Rate</span>
+          <span class="stat-value success" id="on-time-rate">94.2%</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Alerts</span>
+          <span class="stat-value warning" id="alert-count">7</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Carriers Active</span>
+          <span class="stat-value" id="carrier-count">12</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Sprint Board</h3>
+        <ul class="sprint-list" id="sprint-list"></ul>
+      </div>
+    </aside>
+
+    <section class="content-area">
+      <div class="page-header">
+        <h1 class="page-title">Shipment Dashboard</h1>
+        <div class="search-bar">
+          <input
+            type="text"
+            id="shipment-search"
+            class="search-input"
+            placeholder="Search by tracking #, carrier, or destination…"
+          />
+          <button class="btn btn-primary" onclick="handleSearch()">Search</button>
+        </div>
+      </div>
+
+      <div class="shipment-grid" id="shipment-grid"></div>
+
+      <div class="route-panel">
+        <h2 class="section-title">Active Routes</h2>
+        <div class="route-list" id="route-list"></div>
+      </div>
+
+      <div class="carrier-panel">
+        <h2 class="section-title">Carrier Performance</h2>
+        <table class="carrier-table" id="carrier-table">
+          <thead>
+            <tr>
+              <th>Carrier</th>
+              <th>Active Loads</th>
+              <th>On-Time %</th>
+              <th>Avg Transit (days)</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="carrier-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>LogiTrack v1.0 — Demo Environment</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

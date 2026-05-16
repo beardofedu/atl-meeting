@@ -1,0 +1,109 @@
+name: Sprint Impact Analysis
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  issues: write
+  models: read
+
+jobs:
+  analyze-impact:
+    runs-on: ubuntu-latest
+    # Only trigger when an issue is closed as "not_planned" (cancelled/won't fix)
+    if: github.event.issue.state_reason == 'not_planned'
+
+    steps:
+      - name: Analyze sprint impact cascade
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const closedIssue = context.payload.issue;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            console.log(`Analyzing impact cascade for #${closedIssue.number}: ${closedIssue.title}`);
+
+            // Fetch all open issues to build the dependency graph
+            const allIssues = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'open', per_page: 100
+            });
+
+            // Parse "## Depends On" sections to find issues that depend on the closed issue
+            const directlyBlocked = [];
+            for (const issue of allIssues) {
+              const body = issue.body || '';
+              const dependsOnMatch = body.match(/##\s*Depends On\s*\n([\s\S]*?)(?=\n##|\n---|\s*$)/i);
+              if (dependsOnMatch) {
+                const dependsText = dependsOnMatch[1];
+                if (dependsText.includes(`#${closedIssue.number}`)) {
+                  directlyBlocked.push(issue);
+                }
+              }
+            }
+
+            if (directlyBlocked.length === 0) {
+              console.log('No dependent issues found. No cascade needed.');
+              return;
+            }
+
+            console.log(`Found ${directlyBlocked.length} directly blocked issues.`);
+
+            // Build the impact comment for each blocked issue
+            const impactComment = (blockedIssue) => `## ⚠️ Sprint Impact Alert
+
+**Issue #${closedIssue.number} — ${closedIssue.title}** has been closed as **not planned**.
+
+This issue is listed in your \`## Depends On\` section. Your issue may be **blocked** or require re-prioritization.
+
+### What happened
+Issue #${closedIssue.number} (\`${closedIssue.title}\`) was cancelled in Sprint ${getMilestoneTitle(closedIssue)}.
+
+### Recommended actions
+1. **Re-scope**: Evaluate whether this issue can proceed with a stub/mock of the cancelled dependency
+2. **Delay**: Move this issue to a later sprint pending resolution of the dependency
+3. **Descope**: If the dependency is foundational, consider whether this issue should also be cancelled
+
+### Next steps
+- Discuss in sprint planning
+- Update this issue's milestone if it needs to move
+- Remove the \`blocked\` label when the dependency is resolved
+
+_This comment was generated automatically by the [sprint-impact-analysis](../actions/workflows/sprint-impact-analysis.yml) workflow._`;
+
+            const getMilestoneTitle = (issue) =>
+              issue.milestone ? issue.milestone.title : 'the current sprint';
+
+            // Apply "blocked" label and post comment on each directly blocked issue
+            for (const blocked of directlyBlocked) {
+              console.log(`Commenting on #${blocked.number}: ${blocked.title}`);
+
+              // Add "blocked" label
+              try {
+                await github.rest.issues.addLabels({
+                  owner, repo,
+                  issue_number: blocked.number,
+                  labels: ['blocked']
+                });
+              } catch (e) {
+                console.warn(`Could not add blocked label to #${blocked.number}: ${e.message}`);
+              }
+
+              // Post impact alert comment
+              await github.rest.issues.createComment({
+                owner, repo,
+                issue_number: blocked.number,
+                body: impactComment(blocked)
+              });
+            }
+
+            // Post a summary comment on the closed issue itself
+            const summaryLines = directlyBlocked.map(i => `- #${i.number} — ${i.title}`).join('\n');
+            await github.rest.issues.createComment({
+              owner, repo,
+              issue_number: closedIssue.number,
+              body: `## Sprint Impact Summary\n\nThis issue was closed as not planned. The following **${directlyBlocked.length} issue(s)** were flagged and labeled \`blocked\`:\n\n${summaryLines}\n\n_See each issue for remediation recommendations._`
+            });
+
+            console.log(`Sprint impact analysis complete. ${directlyBlocked.length} issue(s) notified.`);
