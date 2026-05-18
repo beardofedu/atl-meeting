@@ -11,14 +11,14 @@ REPO="${2:?Usage: $0 <owner> <owner/repo>}"
 
 echo "Refreshing project OAuth scope…"
 echo "If a browser window opens, enter the one-time code at https://github.com/login/device"
-gh auth refresh -s project,read:project 2>/dev/null || true
+gh auth refresh -s project -s read:project 2>/dev/null || true
 
 create_project() {
   local title="$1"
   local project_id
   project_id=$(gh api graphql -f query="
     mutation {
-      createProjectV2(input: {ownerId: \"$(gh api user --jq .node_id)\", title: \"$title\"}) {
+      createProjectV2(input: {ownerId: \"$(gh api "users/$OWNER" --jq .node_id)\", title: \"$title\"}) {
         projectV2 { id number url }
       }
     }
