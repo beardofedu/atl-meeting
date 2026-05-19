@@ -1,0 +1,46 @@
+name: Deploy Request Portal
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'request-portal/**'
+      - '.github/workflows/deploy-portal.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages:    write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Inject GitHub token into app.js
+        env:
+          PORTAL_GITHUB_TOKEN: ${{ secrets.PORTAL_GITHUB_TOKEN }}
+        run: |
+          sed -i "s/__PORTAL_TOKEN__/${PORTAL_GITHUB_TOKEN}/g" request-portal/app.js
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: request-portal/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

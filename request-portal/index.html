@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LogiTrack · Request Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="portal-header">
+    <div class="portal-header__inner">
+      <div class="portal-header__brand">
+        <span class="portal-header__logo">📦</span>
+        <span class="portal-header__name">LogiTrack</span>
+        <span class="portal-header__divider">|</span>
+        <span class="portal-header__subtitle">Request Portal</span>
+      </div>
+      <a href="../demo-app/" class="portal-header__link">← Back to Dashboard</a>
+    </div>
+  </header>
+
+  <main class="portal-main">
+    <section class="portal-hero">
+      <h1 class="portal-hero__title">Submit a Request</h1>
+      <p class="portal-hero__desc">
+        Have an idea, spotted a bug, or need something fixed? Fill out the form below
+        and your request will automatically become a tracked issue on our project board.
+        Our AI will assess the risk level and route it to the right team. 🚀
+      </p>
+    </section>
+
+    <div class="portal-layout">
+      <!-- Form -->
+      <form id="request-form" class="request-form" novalidate>
+
+        <div class="form-group">
+          <label class="form-label" for="req-title">
+            Request title <span class="form-required">*</span>
+          </label>
+          <input
+            id="req-title"
+            class="form-input"
+            type="text"
+            placeholder="e.g. Add dark mode to the dashboard"
+            maxlength="120"
+            required
+          />
+          <span class="form-hint">Keep it short and descriptive (max 120 chars)</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="req-type">
+              Type <span class="form-required">*</span>
+            </label>
+            <select id="req-type" class="form-select" required>
+              <option value="">— Select —</option>
+              <option value="feature">✨ Feature Request</option>
+              <option value="bug">🐛 Bug Report</option>
+              <option value="performance">🚀 Performance</option>
+              <option value="security">🔐 Security</option>
+              <option value="accessibility">♿ Accessibility</option>
+              <option value="chore">🧹 Chore / Tech Debt</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="req-component">
+              Component <span class="form-required">*</span>
+            </label>
+            <select id="req-component" class="form-select" required>
+              <option value="">— Select —</option>
+              <option value="Shipments">📦 Shipments</option>
+              <option value="Routes">🗺️ Routes</option>
+              <option value="Carriers">🚛 Carriers</option>
+              <option value="Global UI">🎨 Global UI</option>
+              <option value="Performance">⚡ Performance</option>
+              <option value="Security">🔒 Security</option>
+              <option value="Other">🔧 Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="req-priority">
+              Priority <span class="form-required">*</span>
+            </label>
+            <select id="req-priority" class="form-select" required>
+              <option value="">— Select —</option>
+              <option value="critical">🔴 Critical — blocking work now</option>
+              <option value="high">🟠 High — needed this sprint</option>
+              <option value="medium">🟡 Medium — planned backlog</option>
+              <option value="low">🟢 Low — nice to have</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="req-project">
+              Project board <span class="form-required">*</span>
+            </label>
+            <select id="req-project" class="form-select" required>
+              <option value="">Loading projects…</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="req-body">
+            Description <span class="form-required">*</span>
+          </label>
+          <textarea
+            id="req-body"
+            class="form-textarea"
+            rows="7"
+            placeholder="Describe the request in detail. What's the problem? What would a good solution look like? Who is affected?"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="req-submitter">Your name</label>
+          <input
+            id="req-submitter"
+            class="form-input"
+            type="text"
+            placeholder="Optional — helps the team follow up with you"
+          />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn" class="btn btn--primary">
+            <span class="btn__text">Submit Request</span>
+            <span class="btn__spinner" hidden>⏳</span>
+          </button>
+          <button type="reset" class="btn btn--ghost">Clear form</button>
+        </div>
+      </form>
+
+      <!-- Sidebar -->
+      <aside class="portal-sidebar">
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">🤖 What happens next?</h3>
+          <ol class="sidebar-steps">
+            <li class="sidebar-steps__item">
+              <span class="sidebar-steps__icon">1</span>
+              Your request becomes a GitHub Issue in the <strong>atl-meeting</strong> repo
+            </li>
+            <li class="sidebar-steps__item">
+              <span class="sidebar-steps__icon">2</span>
+              It's added to the project board you selected
+            </li>
+            <li class="sidebar-steps__item">
+              <span class="sidebar-steps__icon">3</span>
+              Our AI Risk Assessor evaluates severity (1–10) and assigns a risk label
+            </li>
+            <li class="sidebar-steps__item">
+              <span class="sidebar-steps__icon">4</span>
+              The engineering team reviews and picks it up for the next sprint
+            </li>
+          </ol>
+        </div>
+
+        <div class="sidebar-card sidebar-card--risk">
+          <h3 class="sidebar-card__title">🎯 Risk Scale</h3>
+          <ul class="risk-legend">
+            <li class="risk-legend__item risk-legend__item--critical">
+              <span class="risk-badge risk-badge--critical">Critical 9–10</span>
+              Security, data loss, outage
+            </li>
+            <li class="risk-legend__item risk-legend__item--high">
+              <span class="risk-badge risk-badge--high">High 7–8</span>
+              Workflow disruption, data integrity
+            </li>
+            <li class="risk-legend__item risk-legend__item--medium">
+              <span class="risk-badge risk-badge--medium">Medium 4–6</span>
+              Non-critical features, perf issues
+            </li>
+            <li class="risk-legend__item risk-legend__item--low">
+              <span class="risk-badge risk-badge--low">Low 1–3</span>
+              Cosmetic, docs, nice-to-haves
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Success / Error toast -->
+  <div id="toast" class="toast" role="alert" aria-live="polite" hidden>
+    <span id="toast-icon"></span>
+    <span id="toast-msg"></span>
+    <a id="toast-link" href="#" target="_blank" hidden>View issue →</a>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
